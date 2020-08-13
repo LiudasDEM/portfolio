@@ -2,9 +2,27 @@
   "name": "backend",
   "version": "0.0.1",
   "description": "portfolio backend",
-  "main": "dist/index.js",
-  "scripts": {},
+  "main": "dist/src/server.js",
+  "scripts": {
+    "build": "tsc",
+    "build:dev": "tsc --watch",
+    "start": "cd dist && nodemon src/server.js",
+    "start:dev": "npm-run-all --parallel build:dev start"
+  },
   "keywords": [],
   "author": "Liudas Demikis",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/compression": "^1.7.0",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.7",
+    "@types/node": "^14.0.27",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^3.9.7"
+  }
 }
