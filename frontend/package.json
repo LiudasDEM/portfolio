@@ -3,8 +3,29 @@
   "version": "0.0.1",
   "description": "portfolio frontend",
   "main": "dist/index.js",
-  "scripts": {},
+  "scripts": {
+		"start": "webpack-dev-server --watch --open"
+	},
   "keywords": [],
   "author": "Liudas Demikis",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/plugin-transform-spread": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "babel": "^6.23.0",
+    "babel-loader": "^8.1.0",
+    "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.10.0",
+    "react-svg-loader": "^3.0.3",
+    "sass-loader": "^9.0.3",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
 }
