@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 
 
 import User, { IUser, IUserModel } from '../src/models/User'
+import UserGroup, { IUserGroup, IUserGroupModel } from '../src/models/UserGroup'
 
 
 export function uniq(): string {
@@ -44,6 +45,27 @@ export async function createUser(data?: IUser): Promise<IUserModel> {
 }
 
 
+export async function createUserGroupDTO(): Promise<IUserGroup> {
+	const u = uniq()
+
+	return {
+		title: `${u}-title`,
+		rights: [`${u}-right`],
+	}
+}
+
+
+export async function createUserGroup(data?: IUserGroup): Promise<IUserGroupModel> {
+	const userGroup: IUserGroupModel = new UserGroup({
+		...await createUserGroupDTO(),
+		...(data || {}),
+	})
+
+	return await userGroup.save()
+}
+
+
 export default {
 	User,
+	UserGroup,
 }

@@ -3,7 +3,6 @@ import { Schema, Document, Model, model } from 'mongoose'
 export interface IUserGroup {
 	title: string,
 	rights: string[],
-	company: any,
 }
 
 export interface IUserGroupModel extends IUserGroup, Document {
@@ -16,7 +15,6 @@ const schema: Schema = new Schema({
 	title: String,
 	rights: [String],
 	index: String,
-	company: Schema.Types.ObjectId,
 	modifiedAt: { type: Date, default: Date.now },
 	createdAt: { type: Date, default: Date.now },
 })
