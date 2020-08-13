@@ -1,0 +1,9 @@
+{
+  "name": "admin",
+  "version": "0.0.1",
+  "description": "portfolio admin",
+  "main": "dist/index.js",
+  "scripts": {},
+  "author": "Liudas Demikis",
+  "license": "MIT"
+}
