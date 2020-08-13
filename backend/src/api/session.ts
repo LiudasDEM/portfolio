@@ -123,7 +123,7 @@ async function removeSession(req: express.Request, res: express.Response) {
 }
 
 
-export function refreshSession() {
+export function refreshSession(): express.RequestHandler {
 	return wrap(async function (req, res, next) {
 		if (!req.user) {
 			return next()
@@ -157,7 +157,7 @@ export function refreshSession() {
 }
 
 
-export function validateRights(rights: string, methods?: string) {
+export function validateRights(rights: string, methods?: string): express.RequestHandler {
 	return wrap(async function (req, res, next) {
 		if (methods) {
 			if (!methods.split(' ').includes(req.method)) {
@@ -178,7 +178,7 @@ export function validateRights(rights: string, methods?: string) {
 }
 
 
-export function authenticate() {
+export function authenticate(): express.RequestHandler {
 	return wrap(async function (req, res, next) {
 		if (!req.headers.cookie) { return next() }
 
