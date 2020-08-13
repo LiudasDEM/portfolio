@@ -36,11 +36,10 @@ router.get('/', wrap(async function (req, res) {
 		query: {
 			page: 0,
 			size: 1,
-			select: 'email firstName lastName userGroup language',
+			select: 'email firstName lastName userGroup',
 		},
 		populate: [
 			{ model: 'UserGroup', path: 'userGroup', select: 'rights' },
-			{ model: 'Company', path: 'company', select: 'isAdministrators' },
 		],
 		lean: true,
 	})
@@ -68,11 +67,10 @@ router.post('/', wrap(async function (req, res) {
 		query: {
 			page: 0,
 			size: 1,
-			select: 'email firstName lastName userGroup secret card company car',
+			select: 'email firstName lastName userGroup secret',
 		},
 		populate: [
 			{ model: 'UserGroup', path: 'userGroup', select: 'rights' },
-			{ model: 'Company', path: 'company', select: 'isAdministrators' },
 		],
 	})
 
@@ -138,7 +136,6 @@ export function refreshSession(): express.RequestHandler {
 			},
 			populate: [
 				{ model: 'UserGroup', path: 'userGroup', select: 'rights' },
-				{ model: 'Company', path: 'company', select: 'isAdministrators' },
 			],
 		})
 

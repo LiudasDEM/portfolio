@@ -48,7 +48,7 @@ export function getModelInitialValues(dto: IUser): any {
 
 export const [get, getOne] = constructModelGetters<IUserModel>({
 	Model: User,
-	availableSelectOptions: 'email firstName lastName userGroup secret hash language company car',
+	availableSelectOptions: 'email firstName lastName userGroup secret hash',
 	availableSortOptions: 'email firstName lastName',
 })
 

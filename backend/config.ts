@@ -1,6 +1,7 @@
 export default {
 	port: process.env.HTTP_PORT || 8080,
-	mongoConnectionString: process.env.MONGO_CONNECTION_STRING || 'mongodb://localhost:27017',
+	mongoConnectionString: process.env.MONGO_CONNECTION_STRING || 'mongodb://localhost:27017/portfolio',
+	mongoTestsConnectionString: process.env.MONGO_TESTS_CONNECTION_STRING || 'mongodb://localhost:17017/portfolio-testing',
 	redis: {
 		host: process.env.REDIS_HOST || 'localhost',
 		port: process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6379,
