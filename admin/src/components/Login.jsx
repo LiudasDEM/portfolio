@@ -5,14 +5,17 @@ import { Container, Row, Col, Card } from 'react-bootstrap'
 import { Form, Button } from 'react-bootstrap'
 
 
-import { useAuth, setUser } from '../contexts/Auth'
+import { useAlerts } from '../contexts/Alerts'
+import { useAuth } from '../contexts/Auth'
 
 
 import http from '../http'
 
 
 function Login() {
-	const [, dispatch] = useAuth()
+	const { showAlert } = useAlerts()
+	const { setUser } = useAuth()
+
 
 	const [credentials, setCredentials] = useState({
 		email: '',
@@ -33,9 +36,9 @@ function Login() {
 		event.preventDefault()
 
 		http.post('/api/session', credentials).then(() => {
-			setUser(dispatch)
-		}, console.error)
-	}, [credentials, dispatch])
+			setUser()
+		}, showAlert)
+	}, [credentials]) //eslint-disable-line react-hooks/exhaustive-deps
 
 
 	return <Container>

@@ -2,15 +2,20 @@ import React from 'react'
 
 
 import { AuthProvider } from '../contexts/Auth'
+import { AlertsProvider } from '../contexts/Alerts'
 
 
 import Layout from './Layout'
 
 
 function App() {
-	return <AuthProvider>
-		<Layout />
-	</AuthProvider>
+	return <>
+		<AlertsProvider>
+			<AuthProvider>
+				<Layout />
+			</AuthProvider>
+		</AlertsProvider>
+	</>
 }
 
 

@@ -2,11 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 
+import http from '../http'
+
+
 const AuthStateContext = React.createContext()
 const AuthDispatchContext = React.createContext()
 
 
-import http from '../http'
+import { useAlerts } from './Alerts'
 
 
 function authReducer(state, action) {
@@ -67,22 +70,27 @@ function useAuthDispatch() {
 
 
 function useAuth() {
-	return [useAuthState(), useAuthDispatch()]
+	const { showAlert } = useAlerts()
+
+	const dispatch = useAuthDispatch()
+	const { user, isAuthenticated } = useAuthState()
+
+	function setUser() {
+		http.get('/api/session').then(res => {
+			if (res.data) {
+				dispatch({ type: 'AUTHENTICATED', user: res.data })
+			}
+		}, showAlert)
+	}
+
+	function logout() {
+		http.delete('/api/session').then(() => {
+			dispatch({ type: 'LOGGED_OUT' })
+		}, showAlert)
+	}
+
+	return { setUser, logout, user, isAuthenticated }
 }
 
 
-function setUser(dispatch) {
-	http.get('/api/session').then(res => {
-		dispatch({ type: 'AUTHENTICATED', user: res.data })
-	}, console.error)
-}
-
-
-function logout(dispatch) {
-	http.delete('/api/session').then(() => {
-		dispatch({ type: 'LOGGED_OUT' })
-	}, console.error)
-}
-
-
-export { AuthProvider, useAuth, setUser, logout }
+export { AuthProvider, useAuth }
