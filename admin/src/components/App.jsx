@@ -1,12 +1,16 @@
 import React from 'react'
 
-import Login from './Login'
+
+import { AuthProvider } from '../contexts/Auth'
+
+
+import Layout from './Layout'
 
 
 function App() {
-	return <div>
-		<Login />
-	</div>
+	return <AuthProvider>
+		<Layout />
+	</AuthProvider>
 }
 
 

@@ -5,10 +5,15 @@ import { Container, Row, Col, Card } from 'react-bootstrap'
 import { Form, Button } from 'react-bootstrap'
 
 
+import { useAuth, setUser } from '../contexts/Auth'
+
+
 import http from '../http'
 
 
 function Login() {
+	const [, dispatch] = useAuth()
+
 	const [credentials, setCredentials] = useState({
 		email: '',
 		password: '',
@@ -28,9 +33,9 @@ function Login() {
 		event.preventDefault()
 
 		http.post('/api/session', credentials).then(() => {
-
+			setUser(dispatch)
 		}, console.error)
-	}, [credentials])
+	}, [credentials, dispatch])
 
 
 	return <Container>
