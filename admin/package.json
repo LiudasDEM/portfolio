@@ -4,8 +4,8 @@
   "description": "portfolio admin",
   "main": "dist/index.js",
   "scripts": {
-		"start": "webpack-dev-server --watch --open",
-		"lint": "eslint ."
+    "start": "webpack-dev-server --watch --open",
+    "lint": "eslint ."
   },
   "author": "Liudas Demikis",
   "license": "MIT",
@@ -17,6 +17,7 @@
     "babel": "^6.23.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
+    "css-loader": "^4.2.1",
     "eslint": "^7.6.0",
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.0.8",
@@ -29,8 +30,10 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "bootstrap": "^4.5.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-bootstrap": "^1.3.0",
     "react-dom": "^16.13.1"
   }
 }

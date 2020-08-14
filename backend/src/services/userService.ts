@@ -1,4 +1,6 @@
 import User, { IUserModel, IUser } from '../models/User'
+import UserGroup from '../models/UserGroup'
+
 
 import { constructModelGetters, constructModelPutter, constructModelPoster } from 'apiService'
 import { ValidationError } from 'apiService'
@@ -43,6 +45,23 @@ export function getModelInitialValues(dto: IUser): any {
 		email: dto.email,
 		createdAt: new Date(),
 	}
+}
+
+
+export async function seed(): Promise<void> {
+	await UserGroup.updateOne({ title: 'Administrator' },
+		{ rights: UserGroup.schema.statics.sharedRights }, { upsert: true })
+	await User.updateOne({ email: 'admin@admin.com' },
+		{ email: 'admin@admin.com' }, { upsert: true })
+
+	const userGroup = await UserGroup.findOne({ title: 'Administrator' })
+	const user = await User.findOne({ email: 'admin@admin.com' })
+
+	user.userGroup = userGroup._id
+
+	await user.setPassword('test123')
+	await user.save()
+	await userGroup.save()
 }
 
 

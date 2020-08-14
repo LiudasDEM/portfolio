@@ -5,6 +5,9 @@ import compression from 'compression'
 import cookieParser from 'cookie-parser'
 
 
+import './mongoose'
+
+
 const app = express()
 
 
@@ -24,7 +27,7 @@ app.use(function (
 	next: NextFunction // eslint-disable-line @typescript-eslint/no-unused-vars
 ) {
 	if (err.message === 'ValidationError') {
-		console.warn(err.message, { error: err, req, status: 400 })
+		console.warn(err.message)
 		res.status(400).json({
 			message: 'ValidationError',
 			extra: err.extra,
@@ -47,7 +50,7 @@ app.use(function (
 		return
 	}
 
-	console.error(err.message)
+	console.error(err)
 	res.sendStatus(500)
 })
 

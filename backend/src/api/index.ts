@@ -3,6 +3,7 @@ import express from 'express'
 import session, { authenticate, refreshSession, validateRights } from './session'
 import users from './users'
 import userGroups from './userGroups'
+import seed from './seed'
 
 
 const router = express.Router()
@@ -13,6 +14,10 @@ router.use(refreshSession())
 
 
 router.use('/session', session)
+
+
+router.use('/seed', seed)
+
 
 router.use('/users',
 	validateRights('UsersRead', 'GET'),

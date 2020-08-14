@@ -4,20 +4,12 @@ services:
   redis:
     container_name: portfolio_tests_redis_container
     image: redis
-    volumes:
-       - redis:/data/redis
     ports:
       - 16379:6379
     restart: unless-stopped
   mongo:
       container_name: portfolio_tests_mongo_container
       image: mongo
-      volumes:
-        - mongo:/data/db
       ports:
         - 17017:27017
       restart: unless-stopped
-
-volumes:
-    redis:
-    mongo:
