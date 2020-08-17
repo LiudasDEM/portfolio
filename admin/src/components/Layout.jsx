@@ -19,7 +19,7 @@ function Layout() {
 				<Col><Link to={'/'}>Home</Link></Col>
 				<Col md={{ span: 4, offset: 4 }}>{user.email}</Col>
 			</Row>
-			<Row style={{ marginTop: '20px' }}>
+			<Row style={{ marginTop: '30px' }}>
 				<Col md={3}>
 					<ListGroup>
 						<ListGroup.Item action variant="light">

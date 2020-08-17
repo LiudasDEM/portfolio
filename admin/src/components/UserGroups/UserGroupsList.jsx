@@ -1,5 +1,6 @@
 import React from 'react'
-import { Fade, Container } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Fade, Container, Row, Col, Button } from 'react-bootstrap'
 
 import { useAlerts } from '../../contexts/Alerts'
 
@@ -11,18 +12,27 @@ function UserGroupsList() {
 
 	return <Fade in>
 		<Container>
-			<SuperTable
-				columns={[
-					{ title: 'Title' },
-				]}
-				endpoint={'/api/user-groups'}
-				onError={showAlert}
-				bindFiltersToSearch
-			>
-				{user => <tr key={user._id}>
-					<td>{user.title}</td>
-				</tr>}
-			</SuperTable>
+			<Row>
+				<Col md={{ offset: 8, span: 4 }}>
+					<Button as={Link} variant="info" to={'/user-groups/new'}>Add new user</Button>
+				</Col>
+			</Row>
+			<Row style={{ marginTop: '20px' }}>
+				<Col>
+					<SuperTable
+						columns={[
+							{ title: 'Title' },
+						]}
+						endpoint={'/api/user-groups'}
+						onError={showAlert}
+						bindFiltersToSearch
+					>
+						{userGroup => <tr key={userGroup._id}>
+							<td><Link to={`/users/${userGroup._id}`}>{userGroup.title}</Link></td>
+						</tr>}
+					</SuperTable>
+				</Col>
+			</Row>
 		</Container>
 	</Fade>
 }

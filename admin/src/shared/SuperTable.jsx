@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Row, Col } from 'react-bootstrap'
 
 
 import { http, getSearch, buildSearch } from '.'
 
 
+// add sort
+// add pages
+//
+
 function SuperTable({ endpoint, columns, ...props }) {
 	const debounce = useRef({ firstFetch: true })
+	const first = useRef(true)
 
 	const [data, setData] = useState([])
 	const [, setMaxPages] = useState(0)
@@ -17,8 +22,8 @@ function SuperTable({ endpoint, columns, ...props }) {
 
 		const q = {
 			...search,
-			page: search.page || 0,
-			size: search.size || 10,
+			page: (search.page | 0) || 0,
+			size: (search.size | 0) || 10,
 			search: search.search || undefined,
 			sort: search.sort || undefined,
 		}
@@ -27,7 +32,7 @@ function SuperTable({ endpoint, columns, ...props }) {
 	})
 
 	const load = useCallback(function load() {
-		props.bindFiltersToSearch && window.history.replaceState(null, null, buildSearch(query))
+		props.bindFiltersToSearch && window.history.replaceState({}, '', window.location.origin + window.location.pathname + buildSearch(query))
 
 		http.get(`${endpoint}${buildSearch(query)}`, { headers: { 'return-total-count': true } }).then(res => {
 			setMaxPages(1 + Math.floor(Number(res.headers.get('total-count') || 0) / query.size))
@@ -37,17 +42,17 @@ function SuperTable({ endpoint, columns, ...props }) {
 	}, [query])
 
 	useEffect(() => {
-		if (debounce.current) {
-			if (debounce.current.firstFetch) {
-				debounce.current = null
-				load()
-				return
-			} else {
-				clearTimeout(debounce.current)
-			}
+		if (first.current) {
+			first.current = false
+			load()
+			return
 		}
 
-		debounce.current = setTimeout(() => { load() }, 500)
+		if (debounce.current) {
+			clearTimeout(debounce.current)
+		}
+
+		debounce.current = setTimeout(() => { load() }, 100)
 
 		return () => clearTimeout(debounce.current)
 	}, [load])
@@ -65,15 +70,19 @@ function SuperTable({ endpoint, columns, ...props }) {
 				{data.map(props.children)}
 			</tbody>
 		</Table>
-		<div>
-			{[10, 30, 100].map(size => <Button
-				disabled={query.size === size}
-				key={size}
-				variant="light"
-				onClick={() => setQuery(q => ({ ...q, size }))}>
-				{size}
-			</Button>)}
-		</div>
+		<Row>
+			<Col md={{ span: 4, offset: 8 }}>
+				<span>Size </span>
+				{[10, 30, 100].map(size => <Button
+					disabled={query.size === size}
+					key={size}
+					variant="light"
+					size="sm"
+					onClick={() => setQuery(q => ({ ...q, size }))}>
+					{size}
+				</Button>)}
+			</Col>
+		</Row>
 	</>
 }
 
