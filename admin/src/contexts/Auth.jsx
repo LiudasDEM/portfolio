@@ -29,12 +29,19 @@ function authReducer(state, action) {
 		}
 	}
 
+	if (action.type === 'LOADED') {
+		return {
+			...state,
+			isLoading: false,
+		}
+	}
+
 	return state
 }
 
 
 function AuthProvider({ children }) {
-	const [state, dispatch] = React.useReducer(authReducer, { user: null, isAuthenticated: false })
+	const [state, dispatch] = React.useReducer(authReducer, { user: null, isAuthenticated: false, isLoading: true })
 
 	return (
 		<AuthStateContext.Provider value={state}>
@@ -73,14 +80,16 @@ function useAuth() {
 	const { showAlert } = useAlerts()
 
 	const dispatch = useAuthDispatch()
-	const { user, isAuthenticated } = useAuthState()
+	const { user, isAuthenticated, isLoading } = useAuthState()
 
-	function setUser() {
-		http.get('/api/session').then(res => {
+	async function setUser() {
+		await http.get('/api/session').then(res => {
 			if (res.data) {
 				dispatch({ type: 'AUTHENTICATED', user: res.data })
 			}
 		}, showAlert)
+
+		dispatch({ type: 'LOADED' })
 	}
 
 	function logout() {
@@ -89,7 +98,7 @@ function useAuth() {
 		}, showAlert)
 	}
 
-	return { setUser, logout, user, isAuthenticated }
+	return { setUser, logout, user, isAuthenticated, isLoading }
 }
 
 

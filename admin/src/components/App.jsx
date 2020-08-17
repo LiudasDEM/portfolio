@@ -13,11 +13,15 @@ import Layout from './Layout'
 
 function App() {
 	const { alerts, removeAlert } = useAlerts()
-	const { setUser, isAuthenticated } = useAuth()
+	const { setUser, isAuthenticated, isLoading } = useAuth()
 
 	useEffect(() => {
 		setUser()
 	}, []) //eslint-disable-line react-hooks/exhaustive-deps
+
+	if (isLoading) {
+		return <div>loading...</div>
+	}
 
 	return <>
 		<Switch>

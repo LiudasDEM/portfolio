@@ -2,7 +2,7 @@ import React from 'react'
 
 
 function UserGroupsEdit() {
-	return <div>users edit</div>
+	return <div>user groups edit</div>
 }
 
 

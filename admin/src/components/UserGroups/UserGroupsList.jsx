@@ -2,7 +2,7 @@ import React from 'react'
 
 
 function UserGroupsList() {
-	return <div>users list</div>
+	return <div>user groups list</div>
 }
 
 
