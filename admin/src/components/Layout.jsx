@@ -1,42 +1,19 @@
-import React, { useEffect } from 'react'
-import { Fade, Container, Alert, Row, Col } from 'react-bootstrap'
+import React from 'react'
+import { Route } from 'react-router-dom'
+import { Fade, Container } from 'react-bootstrap'
 
 
-import { useAlerts } from '../contexts/Alerts'
-import { useAuth } from '../contexts/Auth'
-
-
-import Login from './Login'
+import { UsersList, UsersEdit } from './Users'
+import { UserGroupsList, UserGroupsEdit } from './UserGroups'
 
 
 function Layout() {
-	const { alerts, removeAlert } = useAlerts()
-	const { logout, setUser, isAuthenticated } = useAuth()
-
-	useEffect(() => {
-		setUser()
-	}, []) //eslint-disable-line react-hooks/exhaustive-deps
-
 	return <Fade in>
 		<Container>
-			{!isAuthenticated
-				? <Login />
-				: <div><button onClick={() => logout()}>logout</button></div>
-			}
-
-			<Row style={{ marginTop: '20px' }}>
-				<Col md={{ span: 3, offset: 9 }} lg={3}>
-					<div className="alert-box">
-						{alerts.map((alert, i) => (
-							<Alert
-								className="alert__content" key={i} dismissible
-								variant={alert.variant} onClose={() => removeAlert(alert)}>
-								{alert.text}
-							</Alert>
-						))}
-					</div>
-				</Col>
-			</Row>
+			<Route path="/users" exact component={UsersList} />
+			<Route path="/users/:id" component={UsersEdit} />
+			<Route path="/user-groups" exact component={UserGroupsList} />
+			<Route path="/user-groups/:id" component={UserGroupsEdit} />
 		</Container>
 	</Fade>
 }
