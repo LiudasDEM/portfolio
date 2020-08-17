@@ -26,7 +26,7 @@ function UsersList() {
 				</tr>}
 			</SuperTable>
 		</Container>
-	</Fade >
+	</Fade>
 }
 
 
