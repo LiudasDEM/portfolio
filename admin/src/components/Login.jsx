@@ -2,35 +2,28 @@ import React, { useState, useCallback } from 'react'
 
 
 import { Container, Row, Col, Card } from 'react-bootstrap'
-import { Form, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 
 import { useAlerts } from '../contexts/Alerts'
 import { useAuth } from '../contexts/Auth'
 
 
-import http from '../http'
+import { http, useForm, SuperForm } from '../shared'
 
 
 function Login() {
 	const { showAlert } = useAlerts()
 	const { setUser } = useAuth()
 
-
 	const [credentials, setCredentials] = useState({
 		email: '',
 		password: '',
 	})
 
-
-	const updateForm = useCallback(function updateForm(event) {
-		event.persist()
-		setCredentials(creds => ({
-			...creds,
-			[event.target.name]: event.target.value,
-		}))
-	}, [])
-
+	const { updateForm } = useForm({
+		setData: setCredentials,
+	})
 
 	const authenticate = useCallback(function authenticate(event) {
 		event.preventDefault()
@@ -47,19 +40,13 @@ function Login() {
 				<Card bg="light">
 					<Card.Header as="h5">Login</Card.Header>
 					<Card.Body>
-						<Form onSubmit={authenticate}>
-							<Form.Group>
-								<Form.Label>email</Form.Label>
-								<Form.Control type="text" size="sm" value={credentials.email} name="email" onChange={updateForm} />
-							</Form.Group>
-							<Form.Group>
-								<Form.Label>Password</Form.Label>
-								<Form.Control type="password" size="sm" value={credentials.password} name="password" onChange={updateForm} />
-							</Form.Group>
+						<SuperForm onSubmit={authenticate} data={credentials} updateForm={updateForm}>
+							<SuperForm.Control type="text" name="email" label="Email" />
+							<SuperForm.Control type="password" name="password" label="Password" />
 							<Col className="text-center">
 								<Button variant="primary" type="submit">Login</Button>
 							</Col>
-						</Form>
+						</SuperForm>
 					</Card.Body>
 				</Card>
 			</Col>

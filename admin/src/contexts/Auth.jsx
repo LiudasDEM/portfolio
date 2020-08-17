@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 
-import http from '../http'
+import { http } from '../shared'
 
 
 const AuthStateContext = React.createContext()
