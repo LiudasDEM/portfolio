@@ -10,4 +10,8 @@ export * from './SuperForm'
 export { default as SuperForm } from './SuperForm'
 
 
+export * from './SuperTable'
+export { default as SuperTable } from './SuperTable'
+
+
 export * from './util'
