@@ -16,16 +16,22 @@ export function SuperForm(props) {
 		return child
 	})
 
-	return <Form onSubmit={props.onSubmit}>
+	return <Form size={props.size || 'sm'} onSubmit={props.onSubmit}>
 		{children}
 	</Form>
 }
 
 
-export function SuperFormControl({ label, name, type, data, updateForm }) {
+export function SuperFormControl({ label, name, type, data, updateForm, readOnly }) {
 	return <Form.Group>
 		<Form.Label>{label}</Form.Label>
-		<Form.Control type={type} size="sm" value={data[name]} name={name} onChange={updateForm} />
+		<Form.Control
+			type={type}
+			value={data[name]}
+			name={name}
+			onChange={updateForm}
+			readOnly={readOnly || false}
+		/>
 	</Form.Group>
 }
 
@@ -35,6 +41,7 @@ SuperFormControl.propTypes = {
 	name: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
 	data: PropTypes.any,
+	readOnly: PropTypes.bool,
 	updateForm: PropTypes.func,
 }
 
@@ -47,6 +54,7 @@ SuperForm.propTypes = {
 	onSubmit: PropTypes.func.isRequired,
 	updateForm: PropTypes.func.isRequired,
 	data: PropTypes.any.isRequired,
+	size: PropTypes.any,
 }
 
 

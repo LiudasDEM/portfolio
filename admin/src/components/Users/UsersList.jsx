@@ -30,7 +30,7 @@ function UsersList() {
 					>
 						{user => <tr key={user._id}>
 							<td><Link to={`/users/${user._id}`}>{user.email}</Link></td>
-							<td>{user.userGroup.title}</td>
+							<td>{user.userGroup ? user.userGroup.title : '-'}</td>
 						</tr>}
 					</SuperTable>
 				</Col>
