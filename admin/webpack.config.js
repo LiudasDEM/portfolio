@@ -19,6 +19,7 @@ module.exports = {
 			'node_modules',
 		],
 	},
+	stats: 'minimal',
 	devServer: {
 		historyApiFallback: true,
 		port: 8081,

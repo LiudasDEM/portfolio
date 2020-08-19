@@ -22,7 +22,7 @@ export function SuperForm(props) {
 }
 
 
-export function SuperFormControl({ label, name, type, data, updateForm, readOnly }) {
+function SuperFormControlComponent({ label, name, type, data, updateForm, readOnly }) {
 	return <Form.Group>
 		<Form.Label>{label}</Form.Label>
 		<Form.Control
@@ -36,7 +36,7 @@ export function SuperFormControl({ label, name, type, data, updateForm, readOnly
 }
 
 
-SuperFormControl.propTypes = {
+SuperFormControlComponent.propTypes = {
 	label: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
@@ -44,6 +44,11 @@ SuperFormControl.propTypes = {
 	readOnly: PropTypes.bool,
 	updateForm: PropTypes.func,
 }
+
+
+export const SuperFormControl = React.memo(SuperFormControlComponent, (prevProps, newProps) => {
+	return prevProps.data[prevProps.name] === newProps.data[newProps.name]
+})
 
 
 SuperForm.Control = SuperFormControl

@@ -28,7 +28,7 @@ function UserGroupsList() {
 						bindFiltersToSearch
 					>
 						{userGroup => <tr key={userGroup._id}>
-							<td><Link to={`/users/${userGroup._id}`}>{userGroup.title}</Link></td>
+							<td><Link to={`/user-groups/${userGroup._id}`}>{userGroup.title}</Link></td>
 						</tr>}
 					</SuperTable>
 				</Col>

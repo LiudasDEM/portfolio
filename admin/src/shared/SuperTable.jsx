@@ -98,4 +98,4 @@ SuperTable.propTypes = {
 }
 
 
-export default SuperTable
+export default React.memo(SuperTable)

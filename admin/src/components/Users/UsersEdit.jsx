@@ -1,55 +1,33 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { Link, useParams, useHistory } from 'react-router-dom'
+import React, { useState, useMemo } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import { Fade, Container, Row, Col, Button } from 'react-bootstrap'
 
-import { useAlerts } from '../../contexts/Alerts'
 
-import { http, SuperForm, useForm } from '../../shared'
+import { SuperForm, useForm, useCrud } from '../../shared'
 
 
 function UsersEdit() {
 	const { id } = useParams()
-	const history = useHistory()
 
-	const { showAlert } = useAlerts()
 
 	const [data, setData] = useState(UsersEdit.createUser())
-
 	const { updateForm } = useForm({ setData })
 
-	const load = useCallback(() => {
-		http.get(`/api/users/${id}`).then((res) => {
-			setData({ ...UsersEdit.createUser(), ...res.data })
-		}, showAlert)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [id])
 
-	useEffect(() => {
-		if (id === 'new') {
-			return
-		}
-		load()
-	}, [id, load])
+	const useCrudOptions = useMemo(() => ({
+		id,
+		data,
+		endpoint: '/api/users',
+		setData,
+		createModel: UsersEdit.createUser,
+		makeDTO: UsersEdit.makeDTO,
+		path: '/users',
+		successMessage: 'user saved',
+	}), [data, id])
 
-	const save = useCallback((event) => {
-		event.preventDefault()
 
-		const dto = UsersEdit.formDTO(data)
+	const { save } = useCrud(useCrudOptions)
 
-		const promise = !dto._id
-			? http.post('/api/users', dto).then(res => {
-				const id = res.headers.get('location').split('/').pop()
-				history.replace(`/users/${id}`)
-			})
-			: http.put(`/api/users/${dto._id}`, dto).then(() => {
-				load()
-			})
-
-		promise.then(() => {
-			showAlert('user saved')
-		}, showAlert)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data])
 
 	return <Fade in>
 		<Container>
@@ -87,7 +65,7 @@ UsersEdit.createUser = function () {
 }
 
 
-UsersEdit.formDTO = function (data) {
+UsersEdit.makeDTO = function (data) {
 	return {
 		...data,
 		password: data.password ? data.password : null,

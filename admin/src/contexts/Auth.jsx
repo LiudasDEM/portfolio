@@ -95,6 +95,7 @@ function useAuth() {
 	function logout() {
 		http.delete('/api/session').then(() => {
 			dispatch({ type: 'LOGGED_OUT' })
+			showAlert('Logged out succesfully')
 		}, showAlert)
 	}
 

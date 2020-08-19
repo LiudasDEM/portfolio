@@ -15,3 +15,6 @@ export { default as SuperTable } from './SuperTable'
 
 
 export * from './util'
+
+
+export { default as useCrud } from './useCrud'

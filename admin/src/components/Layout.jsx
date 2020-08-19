@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
-import { Fade, Container, Row, Col, ListGroup } from 'react-bootstrap'
+import { Fade, Container, Row, Col, ListGroup, SplitButton, Dropdown } from 'react-bootstrap'
 
 
 import { useAuth } from '../contexts/Auth'
@@ -11,13 +11,17 @@ import { UserGroupsList, UserGroupsEdit } from './UserGroups'
 
 
 function Layout() {
-	const { user } = useAuth()
+	const { user, logout } = useAuth()
 
 	return <Fade in>
 		<Container fluid="xl">
 			<Row style={{ marginTop: '20px' }}>
 				<Col><Link to={'/'}>Home</Link></Col>
-				<Col md={{ span: 4, offset: 4 }}>{user.email}</Col>
+				<Col md={{ span: 4, offset: 4 }}>
+					<SplitButton size={'sm'} variant={'info'} title={user.email}>
+						<Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
+					</SplitButton>
+				</Col>
 			</Row>
 			<Row style={{ marginTop: '30px' }}>
 				<Col md={3}>
