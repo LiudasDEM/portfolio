@@ -9,10 +9,19 @@ import { SuperForm, useForm, useCrud } from '../../shared'
 function UsersEdit() {
 	const { id } = useParams()
 
+	const formRules = useMemo(() => ({
+		email: { type: 'string', required: true },
+		firstName: { type: 'string', minLength: 6, maxLength: 64, required: true },
+		lastName: { type: 'string', minLength: 6, maxLength: 64, required: true },
+		password: {
+			type: 'string', minLength: 6, maxLength: 64, required: false,
+			pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@])[A-Za-z\d!"#$%&'()*+,-./:;<=>?@]{8,}$/,
+		},
+	}), [])
 
 	const [data, setData] = useState(UsersEdit.createUser())
-	const { updateForm } = useForm({ setData })
 
+	const { updateForm, validateForm } = useForm({ setData, rules: formRules, data })
 
 	const useCrudOptions = useMemo(() => ({
 		id,
@@ -23,11 +32,11 @@ function UsersEdit() {
 		makeDTO: UsersEdit.makeDTO,
 		path: '/users',
 		successMessage: 'user saved',
-	}), [data, id])
+		validateForm,
+	}), [data, id, validateForm])
 
 
-	const { save } = useCrud(useCrudOptions)
-
+	const { save, errors } = useCrud(useCrudOptions)
 
 	return <Fade in>
 		<Container>
@@ -38,7 +47,7 @@ function UsersEdit() {
 			</Row>
 			<Row>
 				<Col>
-					<SuperForm size="sm" onSubmit={save} data={data} updateForm={updateForm}>
+					<SuperForm size="sm" onSubmit={save} data={data} updateForm={updateForm} errors={errors}>
 						<SuperForm.Control label="Email" type="text" name="email" readOnly={!!data._id} />
 						<SuperForm.Control label="First name" type="text" name="firstName" />
 						<SuperForm.Control label="Last name" type="text" name="lastName" />

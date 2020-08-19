@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 
@@ -15,6 +15,7 @@ export default function useCrud({
 	const history = useHistory()
 	const { showAlert } = useAlerts()
 
+	const [errors, setErrors] = useState(null)
 
 	const load = useCallback(() => {
 		http.get(`${endpoint}/${id}`).then((res) => {
@@ -33,8 +34,17 @@ export default function useCrud({
 
 
 	const save = useCallback((event) => {
-		if (event) {
+		if (event && event.preventDefault) {
 			event.preventDefault()
+		}
+
+		if (rest.validateForm) {
+			const result = rest.validateForm()
+			if (result.size) {
+				showAlert(Error('Invalid form'))
+				setErrors(result)
+				return
+			}
 		}
 
 		const dto = makeDTO(data)
@@ -55,5 +65,5 @@ export default function useCrud({
 	}, [data])
 
 
-	return { save, load }
+	return { save, load, errors }
 }
