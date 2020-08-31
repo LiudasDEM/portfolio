@@ -10,6 +10,7 @@ export function SuperForm(props) {
 			return React.cloneElement(child, {
 				updateForm: props.updateForm,
 				data: props.data,
+				errors: props.errors,
 			})
 		}
 
@@ -22,7 +23,9 @@ export function SuperForm(props) {
 }
 
 
-function SuperFormControlComponent({ label, name, type, data, updateForm, readOnly }) {
+function SuperFormControlComponent({ errors, label, name, type, data, updateForm, readOnly }) {
+	const error = errors && errors.get(name)
+
 	return <Form.Group>
 		<Form.Label>{label}</Form.Label>
 		<Form.Control
@@ -31,7 +34,11 @@ function SuperFormControlComponent({ label, name, type, data, updateForm, readOn
 			name={name}
 			onChange={updateForm}
 			readOnly={readOnly || false}
+			isInvalid={error}
 		/>
+		{error ? error.map(e => <Form.Control.Feedback key={e} type="invalid">
+			{e}
+		</Form.Control.Feedback>) : null}
 	</Form.Group>
 }
 
@@ -43,12 +50,11 @@ SuperFormControlComponent.propTypes = {
 	data: PropTypes.any,
 	readOnly: PropTypes.bool,
 	updateForm: PropTypes.func,
+	errors: PropTypes.any,
 }
 
 
-export const SuperFormControl = React.memo(SuperFormControlComponent, (prevProps, newProps) => {
-	return prevProps.data[prevProps.name] === newProps.data[newProps.name]
-})
+export const SuperFormControl = React.memo(SuperFormControlComponent)
 
 
 SuperForm.Control = SuperFormControl
@@ -60,6 +66,7 @@ SuperForm.propTypes = {
 	updateForm: PropTypes.func.isRequired,
 	data: PropTypes.any.isRequired,
 	size: PropTypes.any,
+	errors: PropTypes.any,
 }
 
 
