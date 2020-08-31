@@ -27,7 +27,8 @@
     "sass-loader": "^9.0.3",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "z-fetch": "../z-fetch-0.0.1.tgz"
   },
   "dependencies": {
     "bootstrap": "^4.5.2",

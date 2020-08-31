@@ -1,9 +1,9 @@
 import { useCallback, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import http from 'z-fetch'
 
 import { useAlerts } from '../contexts/Alerts'
-import { http } from '.'
 
 
 export default function useCrud({

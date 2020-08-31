@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 
 
-import { http, getSearch, buildSearch } from '.'
+import http from 'z-fetch'
+
+
+import { getSearch, buildSearch } from '.'
 
 
 // add sort

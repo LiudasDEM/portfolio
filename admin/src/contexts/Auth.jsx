@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 
-import { http } from '../shared'
+import http from 'z-fetch'
 
 
 const AuthStateContext = React.createContext()
