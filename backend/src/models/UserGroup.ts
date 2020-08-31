@@ -30,6 +30,9 @@ schema.statics.sharedRights = [
 	'UserGroupsRead',
 	'UserGroupsWrite',
 	'UserGroupsDelete',
+	'ExpensesRead',
+	'ExpensesWrite',
+	'ExpensesDelete',
 ]
 
 schema.statics.administratorsOnlyRights = [

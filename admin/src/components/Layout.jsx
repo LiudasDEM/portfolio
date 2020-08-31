@@ -8,6 +8,7 @@ import { useAuth } from '../contexts/Auth'
 
 import { UsersList, UsersEdit } from './Users'
 import { UserGroupsList, UserGroupsEdit } from './UserGroups'
+import { ExpensesList, ExpensesEdit } from './Expenses'
 
 
 function Layout() {
@@ -32,6 +33,9 @@ function Layout() {
 						<ListGroup.Item action variant="light">
 							<Link to={'/user-groups'}>User groups</Link>
 						</ListGroup.Item>
+						<ListGroup.Item action variant="light">
+							<Link to={'/expenses'}>Expenses</Link>
+						</ListGroup.Item>
 					</ListGroup>
 				</Col>
 				<Col md={8} variant="light">
@@ -40,6 +44,8 @@ function Layout() {
 						<Route path="/users/:id" component={UsersEdit} />
 						<Route path="/user-groups" exact component={UserGroupsList} />
 						<Route path="/user-groups/:id" component={UserGroupsEdit} />
+						<Route path="/expenses" exact component={ExpensesList} />
+						<Route path="/expenses/:id" component={ExpensesEdit} />
 					</Container>
 				</Col>
 			</Row>

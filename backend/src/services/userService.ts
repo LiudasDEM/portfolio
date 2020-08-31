@@ -18,6 +18,7 @@ export const schema = {
 			type: ['string', 'null'], minLength: 6, maxLength: 128,
 			pattern: PASSWORD_PATTERN,
 		},
+		userGroup: { type: 'string,null' },
 	},
 }
 

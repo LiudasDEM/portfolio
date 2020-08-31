@@ -16,6 +16,13 @@ export function useForm({ setData, rules, data }) {
 			return errors
 		}
 
+		if (rule.type === 'number') {
+			value = Number(value)
+			if (isNaN(value)) {
+				errors.push(`${key} is not of type ${rule.type}`)
+			}
+		}
+
 		if (rule.type && typeof value !== rule.type) {
 			errors.push(`${key} is not of type ${rule.type}`)
 		}
