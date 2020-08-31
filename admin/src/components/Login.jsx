@@ -36,7 +36,6 @@ function Login() {
 		}, showAlert)
 	}, [credentials]) //eslint-disable-line react-hooks/exhaustive-deps
 
-
 	return <Container>
 		<Row style={{ marginTop: '20%' }} className="justify-content-md-center">
 			<Col md={4} lg={4}>

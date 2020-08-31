@@ -12,7 +12,7 @@ import { ExpensesList, ExpensesEdit } from './Expenses'
 
 
 function Layout() {
-	const { user, logout } = useAuth()
+	const { user, logout, hasRight } = useAuth()
 
 	return <Fade in>
 		<Container fluid="xl">
@@ -40,12 +40,12 @@ function Layout() {
 				</Col>
 				<Col md={8} variant="light">
 					<Container fluid>
-						<Route path="/users" exact component={UsersList} />
-						<Route path="/users/:id" component={UsersEdit} />
-						<Route path="/user-groups" exact component={UserGroupsList} />
-						<Route path="/user-groups/:id" component={UserGroupsEdit} />
-						<Route path="/expenses" exact component={ExpensesList} />
-						<Route path="/expenses/:id" component={ExpensesEdit} />
+						{hasRight('UsersRead') && <Route path="/users" exact component={UsersList} />}
+						{hasRight('UsersWrite') && <Route path="/users/:id" component={UsersEdit} />}
+						{hasRight('UserGroupsRead') && <Route path="/user-groups" exact component={UserGroupsList} />}
+						{hasRight('UserGroupsWrite') && <Route path="/user-groups/:id" component={UserGroupsEdit} />}
+						{hasRight('ExpensesRead') && <Route path="/expenses" exact component={ExpensesList} />}
+						{hasRight('ExpensesWrite') && <Route path="/expenses/:id" component={ExpensesEdit} />}
 					</Container>
 				</Col>
 			</Row>
