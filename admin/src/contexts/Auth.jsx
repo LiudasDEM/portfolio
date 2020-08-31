@@ -99,7 +99,13 @@ function useAuth() {
 		}, showAlert)
 	}
 
-	return { setUser, logout, user, isAuthenticated, isLoading }
+
+	function hasRight(right) {
+		return user && user.rights && user.rights.includes(right)
+	}
+
+
+	return { setUser, logout, hasRight, user, isAuthenticated, isLoading }
 }
 
 

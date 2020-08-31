@@ -4,12 +4,18 @@ import { Fade, Container, Row, Col, Button } from 'react-bootstrap'
 
 import http from 'z-fetch'
 import { useAlerts } from '../../contexts/Alerts'
+import { useAuth } from '../../contexts/Auth'
+
 import { SuperForm, useForm, useCrud, buildSearch } from '../../shared'
 
 
 function UsersEdit() {
 	const { id } = useParams()
 	const { showAlert } = useAlerts()
+	const { hasRight } = useAuth()
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const hasUserGroupsReadRight = useMemo(() => hasRight('UserGroupsRead'), [])
 
 	const formRules = useMemo(() => ({
 		email: { type: 'string', required: true },
@@ -42,6 +48,7 @@ function UsersEdit() {
 	const { save, errors } = useCrud(useCrudOptions)
 
 	const loadUserGroups = useCallback(function loadUserGroups(input) {
+		if (!hasUserGroupsReadRight) { return }
 		return http.get(`/api/user-groups${buildSearch({ search: input, select: '_id title' })}`).then(res => {
 			return res.data
 		}, showAlert)
@@ -62,7 +69,7 @@ function UsersEdit() {
 						<SuperForm.Control label="First name" type="text" name="firstName" />
 						<SuperForm.Control label="Last name" type="text" name="lastName" />
 						<SuperForm.Control label="Password" type="password" name="password" />
-						<SuperForm.Control
+						{hasUserGroupsReadRight && <SuperForm.Control
 							label="User group"
 							type="async-select"
 							name="userGroup"
@@ -70,7 +77,7 @@ function UsersEdit() {
 							getOptionValue={o => o._id}
 							getOptionLabel={o => o.title}
 							defaultValue={data.userGroup}
-						/>
+						/>}
 						<Col>
 							<Button variant="primary" type="submit">Save</Button>
 						</Col>
