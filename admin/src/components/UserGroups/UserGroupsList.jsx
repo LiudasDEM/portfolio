@@ -14,7 +14,7 @@ function UserGroupsList() {
 		<Container>
 			<Row>
 				<Col md={{ offset: 8, span: 4 }}>
-					<Button as={Link} variant="info" to={'/user-groups/new'}>Add new user</Button>
+					<Button as={Link} variant="info" to={'/user-groups/new'}>Add new user group</Button>
 				</Col>
 			</Row>
 			<Row style={{ marginTop: '20px' }}>
